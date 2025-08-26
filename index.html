@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Loading Page Pastel</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     body, html {
       margin: 0;
@@ -14,222 +14,94 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #e1bee7 100%);
+      background-color: #fce4ec; /* pink bunga mawar soft */
       font-family: 'Quicksand', sans-serif;
-      color: #7c6f64;
+      color: #7c6f64; /* soft rose-brown text */
     }
-    
+
     .loader-container {
       position: relative;
       width: 300px;
       height: 300px;
       border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       overflow: hidden;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-      background: white;
     }
-    
-    .image-placeholder {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0;
-      left: 0;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      color: #ba68c8;
-      text-align: center;
-      background: linear-gradient(45deg, #fce4ec, #f8bbd0);
-      border: 2px dashed #ba68c8;
-      flex-direction: column;
-    }
-    
-    .image-placeholder.active {
-      opacity: 1;
-    }
-    
-    .image-placeholder .icon {
-      font-size: 4rem;
-      margin-bottom: 15px;
-      animation: pulse 2s infinite;
-    }
-    
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); opacity: 0.7; }
-      50% { transform: scale(1.1); opacity: 1; }
-    }
-    
-    img {
-      width: 100%;
-      height: 100%;
+
+    .loader-container img {
+      width: 300px;
+      height: 300px;
+      border-radius: 15px;
       object-fit: cover;
       position: absolute;
       top: 0;
       left: 0;
       opacity: 0;
       transition: opacity 1s ease-in-out;
-      border-radius: 15px;
     }
-    
-    img.active {
+
+    .loader-container img.active {
       opacity: 1;
     }
-    
-    img.hidden {
-      display: none;
-    }
-    
+
     .spinner {
-      border: 6px solid #f8bbd0;
-      border-top: 6px solid #ba68c8;
+      border: 6px solid #f8bbd0; /* pastel pink */
+      border-top: 6px solid #ba68c8; /* soft lavender */
       border-radius: 50%;
       width: 50px;
       height: 50px;
       animation: spin 1.5s linear infinite;
       margin: 20px auto;
     }
-    
+
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-    
+
     .caption {
       text-align: center;
       font-size: 1.2rem;
-      margin-top: 15px;
-      height: 30px;
-      color: #a58fcf;
-      font-weight: 600;
-    }
-    
-    .status {
       margin-top: 10px;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #ba68c8;
-      min-height: 20px;
+      height: 30px;
+      color: #a58fcf; /* pastel ungu lembut */
     }
   </style>
 </head>
 <body>
+
   <div class="loader-container">
-    <!-- Placeholder untuk fallback -->
-    <div class="image-placeholder active" id="placeholder-1">
-      <div class="icon">📸</div>
-      <div>Loading Foto 1...</div>
-    </div>
-    <div class="image-placeholder" id="placeholder-2">
-      <div class="icon">📸</div>
-      <div>Loading Foto 2...</div>
-    </div>
-    <div class="image-placeholder" id="placeholder-3">
-      <div class="icon">📸</div>
-      <div>Loading Foto 3...</div>
-    </div>
-    <div class="image-placeholder" id="placeholder-4">
-      <div class="icon">📸</div>
-      <div>Loading Foto 4...</div>
-    </div>
-    
-    <!-- Gambar asli dari folder images -->
-    <img src="images/pitrahriaaaaa1.jpg" alt="Foto 1" />
-<img src="images/pitrahriaaaaa2.jpg" alt="Foto 2" />
-<img src="images/pitrahriaaaaa3.jpg" alt="Foto 3" />
-<img src="images/pitrahriaaaaa4.jpg" alt="Foto 4" />
+    <img src="images/pitrahriaaaaa1.jpg" class="active" alt="Foto 1" />
+    <img src="images/pitrahriaaaaa2.jpg" alt="Foto 2" />
+    <img src="images/pitrahriaaaaa3.jpg" alt="Foto 3" />
+    <img src="images/pitrahriaaaaa4.jpg" alt="Foto 4" />
   </div>
-  
+
   <div class="spinner"></div>
   <div class="caption">Loading... Bersabar ya!</div>
-  <div class="status" id="status">Memuat gambar...</div>
 
   <script>
-    const images = document.querySelectorAll('img');
-    const placeholders = document.querySelectorAll('.image-placeholder');
+    const images = document.querySelectorAll('.loader-container img');
     const caption = document.querySelector('.caption');
-    const status = document.getElementById('status');
-    
+
     const captionsText = [
-      "Loading... Bersabar ya! 🌸",
-      "Foto kedua, tetap semangat! 🦋", 
-      "Foto ketiga, hampir selesai! 🌺",
-      "Foto keempat, siap-siap ya! 💖"
+      "Loading... Bersabar ya!",
+      "Foto kedua, tetap semangat!",
+      "Foto ketiga, hampir selesai!",
+      "Foto keempat, siap-siap ya!"
     ];
-    
+
     let currentIndex = 0;
-    let loadedImages = [false, false, false, false];
-    let imagesLoaded = 0;
-    
-    // Cek loading gambar
-    images.forEach((img, index) => {
-      img.onload = function() {
-        loadedImages[index] = true;
-        imagesLoaded++;
-        console.log(`Gambar ${index + 1} berhasil dimuat`);
-        
-        // Sembunyikan placeholder ketika gambar berhasil dimuat
-        placeholders[index].style.display = 'none';
-        
-        // Update status
-        status.textContent = `${imagesLoaded}/4 gambar berhasil dimuat`;
-        
-        // Jika gambar pertama dimuat, tampilkan
-        if (index === 0) {
-          img.classList.add('active');
-        }
-        
-        // Jika semua gambar dimuat
-        if (imagesLoaded === 4) {
-          status.textContent = "✅ Semua gambar berhasil dimuat!";
-          setTimeout(() => {
-            status.style.opacity = '0';
-          }, 2000);
-        }
-      };
-      
-      img.onerror = function() {
-        console.log(`Gagal memuat gambar ${index + 1}: ${img.src}`);
-        loadedImages[index] = false;
-        img.classList.add('hidden');
-        
-        // Update status error
-        const failedCount = images.length - imagesLoaded;
-        if (failedCount > 0) {
-          status.innerHTML = `⚠️ ${failedCount} gambar tidak dapat dimuat<br><small>Menggunakan placeholder</small>`;
-        }
-      };
-    });
-    
+
     function changeSlide() {
-      // Sembunyikan slide saat ini
-      if (loadedImages[currentIndex]) {
-        images[currentIndex].classList.remove('active');
-      } else {
-        placeholders[currentIndex].classList.remove('active');
-      }
-      
-      // Pindah ke slide berikutnya
-      currentIndex = (currentIndex + 1) % 4;
-      
-      // Tampilkan slide baru
-      if (loadedImages[currentIndex]) {
-        images[currentIndex].classList.add('active');
-      } else {
-        placeholders[currentIndex].classList.add('active');
-      }
-      
-      // Update caption
+      images[currentIndex].classList.remove('active');
+      currentIndex = (currentIndex + 1) % images.length;
+      images[currentIndex].classList.add('active');
       caption.textContent = captionsText[currentIndex];
     }
-    
-    // Mulai slideshow setelah 2 detik
-    setTimeout(() => {
-      setInterval(changeSlide, 3000); // Ganti gambar tiap 3 detik
-    }, 2000);
+
+    setInterval(changeSlide, 10000); // ganti gambar tiap 10 detik
   </script>
+
 </body>
 </html>
