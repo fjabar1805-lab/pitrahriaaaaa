@@ -26,6 +26,7 @@
       border-radius: 15px;
       overflow: hidden;
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      background: white;
     }
     
     .image-placeholder {
@@ -44,17 +45,22 @@
       text-align: center;
       background: linear-gradient(45deg, #fce4ec, #f8bbd0);
       border: 2px dashed #ba68c8;
+      flex-direction: column;
     }
     
     .image-placeholder.active {
       opacity: 1;
     }
     
-    .image-placeholder::before {
-      content: "📸";
-      font-size: 3rem;
-      display: block;
-      margin-bottom: 10px;
+    .image-placeholder .icon {
+      font-size: 4rem;
+      margin-bottom: 15px;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.1); opacity: 1; }
     }
     
     img {
@@ -66,13 +72,14 @@
       left: 0;
       opacity: 0;
       transition: opacity 1s ease-in-out;
+      border-radius: 15px;
     }
     
     img.active {
       opacity: 1;
     }
     
-    img.error {
+    img.hidden {
       display: none;
     }
     
@@ -100,53 +107,37 @@
       font-weight: 600;
     }
     
-    .debug-info {
-      margin-top: 20px;
-      padding: 10px;
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 10px;
+    .status {
+      margin-top: 10px;
       text-align: center;
       font-size: 0.9rem;
-      color: #7c6f64;
-    }
-    
-    .file-check {
-      margin-top: 10px;
-      font-size: 0.8rem;
-      color: #666;
+      color: #ba68c8;
+      min-height: 20px;
     }
   </style>
 </head>
 <body>
   <div class="loader-container">
-    <!-- Placeholder images that will show if actual images fail to load -->
+    <!-- Placeholder untuk fallback -->
     <div class="image-placeholder active" id="placeholder-1">
-      <div>
-        <div>Foto 1</div>
-        <div style="font-size: 0.9rem; margin-top: 5px;">pitrahriaaaaa1.jpg</div>
-      </div>
+      <div class="icon">📸</div>
+      <div>Loading Foto 1...</div>
     </div>
     <div class="image-placeholder" id="placeholder-2">
-      <div>
-        <div>Foto 2</div>
-        <div style="font-size: 0.9rem; margin-top: 5px;">pitrahriaaaaa2.jpg</div>
-      </div>
+      <div class="icon">📸</div>
+      <div>Loading Foto 2...</div>
     </div>
     <div class="image-placeholder" id="placeholder-3">
-      <div>
-        <div>Foto 3</div>
-        <div style="font-size: 0.9rem; margin-top: 5px;">pitrahriaaaaa3.jpg</div>
-      </div>
+      <div class="icon">📸</div>
+      <div>Loading Foto 3...</div>
     </div>
     <div class="image-placeholder" id="placeholder-4">
-      <div>
-        <div>Foto 4</div>
-        <div style="font-size: 0.9rem; margin-top: 5px;">pitrahriaaaaa4.jpg</div>
-      </div>
+      <div class="icon">📸</div>
+      <div>Loading Foto 4...</div>
     </div>
     
-    <!-- Actual images -->
-    <img src="images/pitrahriaaaaa1.jpg" class="active" alt="Foto 1" id="img-1" />
+    <!-- Gambar asli dari folder images -->
+    <img src="images/pitrahriaaaaa1.jpg" alt="Foto 1" id="img-1" />
     <img src="images/pitrahriaaaaa2.jpg" alt="Foto 2" id="img-2" />
     <img src="images/pitrahriaaaaa3.jpg" alt="Foto 3" id="img-3" />
     <img src="images/pitrahriaaaaa4.jpg" alt="Foto 4" id="img-4" />
@@ -154,85 +145,91 @@
   
   <div class="spinner"></div>
   <div class="caption">Loading... Bersabar ya!</div>
-  
-  <div class="debug-info">
-    <div>🔍 Debug Info:</div>
-    <div class="file-check" id="file-status">Checking image files...</div>
-  </div>
+  <div class="status" id="status">Memuat gambar...</div>
 
   <script>
-    const images = document.querySelectorAll('.loader-container img');
+    const images = document.querySelectorAll('img');
     const placeholders = document.querySelectorAll('.image-placeholder');
     const caption = document.querySelector('.caption');
-    const fileStatus = document.getElementById('file-status');
+    const status = document.getElementById('status');
     
     const captionsText = [
-      "Loading... Bersabar ya!",
-      "Foto kedua, tetap semangat!",
-      "Foto ketiga, hampir selesai!",
-      "Foto keempat, siap-siap ya!"
+      "Loading... Bersabar ya! 🌸",
+      "Foto kedua, tetap semangat! 🦋", 
+      "Foto ketiga, hampir selesai! 🌺",
+      "Foto keempat, siap-siap ya! 💖"
     ];
     
     let currentIndex = 0;
-    let loadedImages = [];
+    let loadedImages = [false, false, false, false];
+    let imagesLoaded = 0;
     
-    // Check which images actually load
+    // Cek loading gambar
     images.forEach((img, index) => {
       img.onload = function() {
         loadedImages[index] = true;
+        imagesLoaded++;
+        console.log(`Gambar ${index + 1} berhasil dimuat`);
+        
+        // Sembunyikan placeholder ketika gambar berhasil dimuat
         placeholders[index].style.display = 'none';
-        console.log(`Image ${index + 1} loaded successfully`);
-        updateFileStatus();
+        
+        // Update status
+        status.textContent = `${imagesLoaded}/4 gambar berhasil dimuat`;
+        
+        // Jika gambar pertama dimuat, tampilkan
+        if (index === 0) {
+          img.classList.add('active');
+        }
+        
+        // Jika semua gambar dimuat
+        if (imagesLoaded === 4) {
+          status.textContent = "✅ Semua gambar berhasil dimuat!";
+          setTimeout(() => {
+            status.style.opacity = '0';
+          }, 2000);
+        }
       };
       
       img.onerror = function() {
+        console.log(`Gagal memuat gambar ${index + 1}: ${img.src}`);
         loadedImages[index] = false;
-        img.classList.add('error');
-        console.log(`Image ${index + 1} failed to load`);
-        updateFileStatus();
+        img.classList.add('hidden');
+        
+        // Update status error
+        const failedCount = images.length - imagesLoaded;
+        if (failedCount > 0) {
+          status.innerHTML = `⚠️ ${failedCount} gambar tidak dapat dimuat<br><small>Menggunakan placeholder</small>`;
+        }
       };
     });
     
-    function updateFileStatus() {
-      const loaded = loadedImages.filter(Boolean).length;
-      const total = images.length;
-      fileStatus.textContent = `Images loaded: ${loaded}/${total}`;
-      
-      if (loaded === 0) {
-        fileStatus.innerHTML += '<br>⚠️ No images found. Check if files exist in /images/ folder';
-      } else if (loaded < total) {
-        fileStatus.innerHTML += '<br>⚠️ Some images missing. Using placeholders.';
-      } else {
-        fileStatus.innerHTML += '<br>✅ All images loaded successfully!';
-      }
-    }
-    
     function changeSlide() {
-      // Hide current elements
+      // Sembunyikan slide saat ini
       if (loadedImages[currentIndex]) {
         images[currentIndex].classList.remove('active');
       } else {
         placeholders[currentIndex].classList.remove('active');
       }
       
-      // Move to next slide
-      currentIndex = (currentIndex + 1) % images.length;
+      // Pindah ke slide berikutnya
+      currentIndex = (currentIndex + 1) % 4;
       
-      // Show next elements
+      // Tampilkan slide baru
       if (loadedImages[currentIndex]) {
         images[currentIndex].classList.add('active');
       } else {
         placeholders[currentIndex].classList.add('active');
       }
       
+      // Update caption
       caption.textContent = captionsText[currentIndex];
     }
     
-    // Start slideshow
-    setInterval(changeSlide, 3000); // ganti tiap 3 detik untuk testing
-    
-    // Initial status check after 1 second
-    setTimeout(updateFileStatus, 1000);
+    // Mulai slideshow setelah 2 detik
+    setTimeout(() => {
+      setInterval(changeSlide, 3000); // Ganti gambar tiap 3 detik
+    }, 2000);
   </script>
 </body>
 </html>
