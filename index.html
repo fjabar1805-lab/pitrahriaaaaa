@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Loading Page Pastel + SweetAlert</title>
+  <title>Loading Page with SweetAlert</title>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     body, html {
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      background-color: #fce4ec; /* pink bunga mawar soft */
+      background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #e1bee7 100%);
       font-family: 'Quicksand', sans-serif;
-      color: #7c6f64; /* soft rose-brown text */
-      filter: none;
+      color: #7c6f64;
       transition: filter 0.3s ease;
     }
 
@@ -26,13 +26,48 @@
       width: 300px;
       height: 300px;
       border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
       overflow: hidden;
+      background: white;
+    }
+
+    .image-placeholder {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: #ba68c8;
+      text-align: center;
+      background: linear-gradient(45deg, #fce4ec, #f8bbd0);
+      border: 2px dashed #ba68c8;
+      flex-direction: column;
+    }
+    
+    .image-placeholder.active {
+      opacity: 1;
+    }
+    
+    .image-placeholder .icon {
+      font-size: 4rem;
+      margin-bottom: 15px;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.7; }
+      50% { transform: scale(1.1); opacity: 1; }
     }
 
     .loader-container img {
-      width: 300px;
-      height: 300px;
+      width: 100%;
+      height: 100%;
       border-radius: 15px;
       object-fit: cover;
       position: absolute;
@@ -46,9 +81,13 @@
       opacity: 1;
     }
 
+    .loader-container img.hidden {
+      display: none;
+    }
+
     .spinner {
-      border: 6px solid #f8bbd0; /* pastel pink */
-      border-top: 6px solid #ba68c8; /* soft lavender */
+      border: 6px solid #f8bbd0;
+      border-top: 6px solid #ba68c8;
       border-radius: 50%;
       width: 50px;
       height: 50px;
@@ -64,87 +103,293 @@
     .caption {
       text-align: center;
       font-size: 1.2rem;
-      margin-top: 10px;
+      margin-top: 15px;
       height: 30px;
-      color: #a58fcf; /* pastel ungu lembut */
+      color: #a58fcf;
+      font-weight: 600;
     }
 
-    /* Caption di bawah tombol SweetAlert */
-    .swal2-html-container .button-caption {
-      margin-top: 10px;
-      font-size: 0.9rem;
-      color: #6b5b50;
-      text-align: center;
-      font-style: italic;
+    .progress-bar {
+      width: 300px;
+      height: 6px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 3px;
+      margin: 10px 0;
+      overflow: hidden;
     }
 
-    /* Tombol hijau pastel SweetAlert */
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ba68c8, #f8bbd0);
+      width: 0%;
+      transition: width 0.3s ease;
+      border-radius: 3px;
+    }
+
+    /* Custom SweetAlert styling */
     .custom-confirm-button {
-      background-color: #a8d5ba; /* hijau pastel */
-      border: none;
-      padding: 10px 24px;
-      font-size: 1rem;
-      border-radius: 6px;
-      color: #fff;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
+      background-color: #a8d5ba !important;
+      border: none !important;
+      padding: 10px 24px !important;
+      font-size: 1rem !important;
+      border-radius: 8px !important;
+      color: #fff !important;
+      cursor: pointer !important;
+      transition: background-color 0.3s ease !important;
     }
+    
     .custom-confirm-button:hover {
-      background-color: #8ec59d;
+      background-color: #8ec59d !important;
     }
 
-    /* Animasi SweetAlert custom */
-    @keyframes showRightLeft { from { transform: translateX(100%) scale(0.8); opacity: 0; } to { transform: translateX(0) scale(1); opacity: 1; } }
-    @keyframes hideRightLeft { from { transform: translateX(0) scale(1); opacity: 1; } to { transform: translateX(-100%) scale(0.8); opacity: 0; } }
+    .button-caption {
+      margin-top: 10px !important;
+      font-size: 0.9rem !important;
+      color: #6b5b50 !important;
+      text-align: center !important;
+      font-style: italic !important;
+    }
+
+    /* Animasi SweetAlert */
+    @keyframes showRightLeft { 
+      from { transform: translateX(100%) scale(0.8); opacity: 0; } 
+      to { transform: translateX(0) scale(1); opacity: 1; } 
+    }
+    @keyframes hideRightLeft { 
+      from { transform: translateX(0) scale(1); opacity: 1; } 
+      to { transform: translateX(-100%) scale(0.8); opacity: 0; } 
+    }
     .swal2-show-right-left { animation: showRightLeft 0.5s forwards; }
     .swal2-hide-right-left { animation: hideRightLeft 0.4s forwards; }
 
-    @keyframes showTopCenter { from { transform: translateY(-100%) scale(0.8); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
-    @keyframes hideTopCenter { from { transform: translateY(0) scale(1); opacity: 1; } to { transform: translateY(-100%) scale(0.8); opacity: 0; } }
-    .swal2-show-top-center { animation: showTopCenter 0.5s forwards; }
-    .swal2-hide-top-center { animation: hideTopCenter 0.4s forwards; }
-
-    @keyframes zoomIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-    @keyframes zoomOut { from { transform: scale(1); opacity: 1; } to { transform: scale(0.5); opacity: 0; } }
+    @keyframes zoomIn { 
+      from { transform: scale(0.5); opacity: 0; } 
+      to { transform: scale(1); opacity: 1; } 
+    }
+    @keyframes zoomOut { 
+      from { transform: scale(1); opacity: 1; } 
+      to { transform: scale(0.5); opacity: 0; } 
+    }
     .swal2-show-zoom-in { animation: zoomIn 0.5s forwards; }
     .swal2-hide-zoom-out { animation: zoomOut 0.4s forwards; }
 
-    @keyframes showBottomCenter { from { transform: translateY(100%) scale(0.8); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
-    @keyframes hideBottomCenter { from { transform: translateY(0) scale(1); opacity: 1; } to { transform: translateY(100%) scale(0.8); opacity: 0; } }
-    .swal2-show-bottom-center { animation: showBottomCenter 0.5s forwards; }
-    .swal2-hide-bottom-center { animation: hideBottomCenter 0.4s forwards; }
-
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
-    .swal2-show-fade-in { animation: fadeIn 0.5s forwards; }
-    .swal2-hide-fade-out { animation: fadeOut 0.4s forwards; }
-
-    @keyframes showLeftRight { from { transform: translateX(-100%) scale(0.8); opacity: 0; } to { transform: translateX(0) scale(1); opacity: 1; } }
-    @keyframes hideLeftRight { from { transform: translateX(0) scale(1); opacity: 1; } to { transform: translateX(100%) scale(0.8); opacity: 0; } }
-    .swal2-show-left-right { animation: showLeftRight 0.5s forwards; }
-    .swal2-hide-left-right { animation: hideLeftRight 0.4s forwards; }
-
-    @keyframes scaleUp { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-    @keyframes scaleDown { from { transform: scale(1); opacity: 1; } to { transform: scale(0.5); opacity: 0; } }
-    .swal2-show-scale-up { animation: scaleUp 0.5s forwards; }
-    .swal2-hide-scale-down { animation: scaleDown 0.4s forwards; }
-
-    @keyframes flipIn { from { transform: rotateY(90deg); opacity: 0; } to { transform: rotateY(0deg); opacity: 1; } }
-    @keyframes flipOut { from { transform: rotateY(0deg); opacity: 1; } to { transform: rotateY(90deg); opacity: 0; } }
+    @keyframes flipIn { 
+      from { transform: rotateY(90deg); opacity: 0; } 
+      to { transform: rotateY(0deg); opacity: 1; } 
+    }
+    @keyframes flipOut { 
+      from { transform: rotateY(0deg); opacity: 1; } 
+      to { transform: rotateY(90deg); opacity: 0; } 
+    }
     .swal2-show-flip { animation: flipIn 0.5s forwards; }
     .swal2-hide-flip { animation: flipOut 0.4s forwards; }
   </style>
 </head>
 <body>
-
   <div class="loader-container">
-    <img src="images/pitrahriaaaaa1.jpg" class="active" alt="Foto 1" />
-    <img src="images/pitrahriaaaaa2.jpg" alt="Foto 2" />
-    <img src="images/pitrahriaaaaa3.jpg" alt="Foto 3" />
-    <img src="images/pitrahriaaaaa4.jpg" alt="Foto 4" />
+    <!-- Placeholder untuk fallback -->
+    <div class="image-placeholder active" id="placeholder-1">
+      <div class="icon">🌸</div>
+      <div>Loading Foto 1...</div>
+    </div>
+    <div class="image-placeholder" id="placeholder-2">
+      <div class="icon">🦋</div>
+      <div>Loading Foto 2...</div>
+    </div>
+    <div class="image-placeholder" id="placeholder-3">
+      <div class="icon">🌺</div>
+      <div>Loading Foto 3...</div>
+    </div>
+    <div class="image-placeholder" id="placeholder-4">
+      <div class="icon">💖</div>
+      <div>Loading Foto 4...</div>
+    </div>
+    
+    <!-- Gambar asli -->
+    <img src="images/pitrahriaaaaa1.jpg" alt="Foto 1" id="img-1" />
+    <img src="images/pitrahriaaaaa2.jpg" alt="Foto 2" id="img-2" />
+    <img src="images/pitrahriaaaaa3.jpg" alt="Foto 3" id="img-3" />
+    <img src="images/pitrahriaaaaa4.jpg" alt="Foto 4" id="img-4" />
   </div>
-
+  
   <div class="spinner"></div>
   <div class="caption">Loading... Bersabar ya!</div>
+  
+  <div class="progress-bar">
+    <div class="progress-fill" id="progress"></div>
+  </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script
+  <script>
+    const images = document.querySelectorAll('img');
+    const placeholders = document.querySelectorAll('.image-placeholder');
+    const caption = document.querySelector('.caption');
+    const progress = document.getElementById('progress');
+    const spinner = document.querySelector('.spinner');
+    
+    const captionsText = [
+      "Loading... Bersabar ya! 🌸",
+      "Foto kedua, tetap semangat! 🦋",
+      "Foto ketiga, hampir selesai! 🌺",
+      "Foto keempat, siap-siap ya! 💖"
+    ];
+
+    const sweetAlertMessages = [
+      "🌸 Selamat datang! Terima kasih sudah menunggu slideshow selesai!",
+      "🦋 Foto-foto tadi cantik ya? Mari lanjutkan perjalanan kita!",
+      "🌺 Hampir selesai! Kamu sabar banget, salut deh!",
+      "💖 Alert terakhir! Terima kasih sudah mengikuti sampai akhir!"
+    ];
+
+    const buttonCaptions = [
+      "Klik untuk melanjutkan ke alert berikutnya",
+      "Semangat! Masih ada beberapa alert lagi",
+      "Tinggal satu lagi, hampir selesai!",
+      "Alert terakhir, terima kasih ya!"
+    ];
+    
+    let currentIndex = 0;
+    let loadedImages = [false, false, false, false];
+    let imagesLoaded = 0;
+    let slideshowCompleted = false;
+    let slideshowInterval;
+
+    // Cek loading gambar
+    images.forEach((img, index) => {
+      img.onload = function() {
+        loadedImages[index] = true;
+        imagesLoaded++;
+        placeholders[index].style.display = 'none';
+        
+        if (index === 0) {
+          img.classList.add('active');
+        }
+        
+        if (imagesLoaded === 4) {
+          startSlideshow();
+        }
+      };
+      
+      img.onerror = function() {
+        loadedImages[index] = false;
+        img.classList.add('hidden');
+        
+        if (index === 0 && !loadedImages[0]) {
+          placeholders[0].classList.add('active');
+        }
+        
+        // Jika tidak ada gambar yang berhasil dimuat, gunakan placeholder slideshow
+        if (imagesLoaded === 0) {
+          startPlaceholderSlideshow();
+        }
+      };
+    });
+
+    function updateProgress() {
+      const progressPercent = ((currentIndex + 1) / 4) * 100;
+      progress.style.width = progressPercent + '%';
+    }
+
+    function changeSlide() {
+      // Hide current slide
+      if (loadedImages[currentIndex]) {
+        images[currentIndex].classList.remove('active');
+      } else {
+        placeholders[currentIndex].classList.remove('active');
+      }
+      
+      // Move to next slide
+      currentIndex = (currentIndex + 1) % 4;
+      
+      // Show next slide
+      if (loadedImages[currentIndex]) {
+        images[currentIndex].classList.add('active');
+      } else {
+        placeholders[currentIndex].classList.add('active');
+      }
+      
+      caption.textContent = captionsText[currentIndex];
+      updateProgress();
+      
+      // Jika sudah sampai foto ke-4 dan belum pernah menjalankan SweetAlert
+      if (currentIndex === 0 && !slideshowCompleted) {
+        slideshowCompleted = true;
+        clearInterval(slideshowInterval);
+        
+        setTimeout(() => {
+          startSweetAlertSequence();
+        }, 2000); // Tunggu 2 detik setelah kembali ke foto pertama
+      }
+    }
+
+    function startSlideshow() {
+      caption.textContent = captionsText[0];
+      updateProgress();
+      slideshowInterval = setInterval(changeSlide, 3000); // Ganti tiap 3 detik
+    }
+
+    function startPlaceholderSlideshow() {
+      placeholders[0].classList.add('active');
+      caption.textContent = captionsText[0];
+      updateProgress();
+      slideshowInterval = setInterval(changeSlide, 3000);
+    }
+
+    function startSweetAlertSequence() {
+      spinner.style.display = 'none';
+      caption.textContent = "🎉 Slideshow selesai! Siap untuk surprise?";
+      
+      setTimeout(() => {
+        showSweetAlert(0);
+      }, 1000);
+    }
+
+    function showSweetAlert(index) {
+      if (index >= sweetAlertMessages.length) {
+        // Selesai semua alert
+        caption.textContent = "✨ Semua selesai! Terima kasih! ✨";
+        return;
+      }
+
+      const animations = ['swal2-show-right-left', 'swal2-show-zoom-in', 'swal2-show-flip', 'swal2-show-right-left'];
+
+      Swal.fire({
+        title: `🌟 Alert ke-${index + 1}`,
+        html: `
+          <p style="font-size: 1.1rem; margin-bottom: 15px;">${sweetAlertMessages[index]}</p>
+          <div class="button-caption">${buttonCaptions[index]}</div>
+        `,
+        icon: 'success',
+        showConfirmButton: true,
+        confirmButtonText: index === sweetAlertMessages.length - 1 ? 'Selesai! 🎉' : 'Lanjutkan ➤',
+        customClass: {
+          popup: animations[index],
+          confirmButton: 'custom-confirm-button'
+        },
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        buttonsStyling: false,
+        background: '#fff',
+        color: '#333'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          if (index < sweetAlertMessages.length - 1) {
+            setTimeout(() => {
+              showSweetAlert(index + 1);
+            }, 500);
+          } else {
+            // Alert terakhir selesai
+            caption.textContent = "🌸 Semua selesai! Sampai jumpa! 🌸";
+          }
+        }
+      });
+    }
+
+    // Mulai dengan placeholder jika tidak ada gambar yang dimuat setelah 2 detik
+    setTimeout(() => {
+      if (imagesLoaded === 0) {
+        startPlaceholderSlideshow();
+      }
+    }, 2000);
+  </script>
+</body>
+</html>
