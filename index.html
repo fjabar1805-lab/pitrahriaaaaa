@@ -1,89 +1,105 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Loading Page dengan Slideshow</title>
-<style>
-  body, html {
-    margin: 0; padding: 0; height: 100%;
-    display: flex; justify-content: center; align-items: center;
-    background: #222;
-    color: white;
-    font-family: Arial, sans-serif;
-    flex-direction: column;
-  }
-  .loader-container {
-    position: relative;
-    width: 300px; height: 300px;
-  }
-  img {
-    width: 300px; height: 300px;
-    border-radius: 15px;
-    object-fit: cover;
-    position: absolute;
-    top: 0; left: 0;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-  }
-  img.active {
-    opacity: 1;
-  }
-  .spinner {
-    border: 6px solid #f3f3f3; /* Light grey */
-    border-top: 6px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 50px; height: 50px;
-    animation: spin 1.5s linear infinite;
-    margin: 20px auto;
-  }
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-  .caption {
-    text-align: center;
-    font-size: 1.2rem;
-    margin-top: 10px;
-    height: 30px;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Loading Page Pastel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-color: #fce4ec; /* pink bunga mawar soft */
+      font-family: 'Quicksand', sans-serif;
+      color: #7c6f64; /* soft rose-brown text */
+    }
+
+    .loader-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+    }
+
+    img {
+      width: 300px;
+      height: 300px;
+      border-radius: 15px;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    img.active {
+      opacity: 1;
+    }
+
+    .spinner {
+      border: 6px solid #f8bbd0; /* pastel pink */
+      border-top: 6px solid #ba68c8; /* soft lavender */
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1.5s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .caption {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-top: 10px;
+      height: 30px;
+      color: #a58fcf; /* pastel ungu lembut */
+    }
+  </style>
 </head>
 <body>
 
-<div class="loader-container">
-<img src="/pitrahriaaaaa/images/pitrahriaaaa1.jpg" class="active" alt="Foto 1" />
-<img src="/pitrahriaaaaa/images/pitrahriaaaa2.jpg" alt="Foto 2" />
-<img src="/pitrahriaaaaa/images/pitrahriaaaa3.jpg" alt="Foto 3" />
-<img src="/pitrahriaaaaa/images/pitrahriaaaa4.jpg" alt="Foto 4" />
-</div>
+  <div class="loader-container">
+    <img src="/pitrahriaaaaa/images/pitrahriaaaaa1.jpg" class="active" alt="Foto 1" />
+    <img src="/pitrahriaaaaa/images/pitrahriaaaaa2.jpg" alt="Foto 2" />
+    <img src="/pitrahriaaaaa/images/pitrahriaaaaa3.jpg" alt="Foto 3" />
+    <img src="/pitrahriaaaaa/images/pitrahriaaaaa4.jpg" alt="Foto 4" />
+  </div>
 
-<div class="spinner"></div>
-<div class="caption">Loading... Bersabar ya!</div>
+  <div class="spinner"></div>
+  <div class="caption">Loading... Bersabar ya!</div>
 
-<script>
-  const images = document.querySelectorAll('.loader-container img');
-  const caption = document.querySelector('.caption');
+  <script>
+    const images = document.querySelectorAll('.loader-container img');
+    const caption = document.querySelector('.caption');
 
-  const captionsText = [
-    "Loading... Bersabar ya!",
-    "Foto kedua, tetap semangat!",
-    "Foto ketiga, hampir selesai!",
-    "Foto keempat, siap-siap ya!"
-  ];
+    const captionsText = [
+      "Loading... Bersabar ya!",
+      "Foto kedua, tetap semangat!",
+      "Foto ketiga, hampir selesai!",
+      "Foto keempat, siap-siap ya!"
+    ];
 
-  let currentIndex = 0;
+    let currentIndex = 0;
 
-  function changeSlide() {
-    images[currentIndex].classList.remove('active');
-    currentIndex = (currentIndex + 1) % images.length;
-    images[currentIndex].classList.add('active');
+    function changeSlide() {
+      images[currentIndex].classList.remove('active');
+      currentIndex = (currentIndex + 1) % images.length;
+      images[currentIndex].classList.add('active');
+      caption.textContent = captionsText[currentIndex];
+    }
 
-    caption.textContent = captionsText[currentIndex];
-  }
-
-  setInterval(changeSlide, 10000); // ganti gambar tiap 10 detik
-</script>
+    setInterval(changeSlide, 10000); // ganti gambar tiap 10 detik
+  </script>
 
 </body>
 </html>
