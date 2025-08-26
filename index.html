@@ -3,105 +3,183 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Loading Page Pastel</title>
+  <title>SweetAlert 7 Kali dengan Caption Button</title>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet" />
   <style>
     body, html {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       height: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      background-color: #fce4ec; /* pink bunga mawar soft */
+      background-color: #fce4ec;
       font-family: 'Quicksand', sans-serif;
-      color: #7c6f64; /* soft rose-brown text */
+      filter: none;
+      transition: filter 0.3s ease;
     }
 
-    .loader-container {
-      position: relative;
-      width: 300px;
-      height: 300px;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-    }
-
-    .loader-container img {
-      width: 300px;
-      height: 300px;
-      border-radius: 15px;
-      object-fit: cover;
-      position: absolute;
-      top: 0;
-      left: 0;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
-    }
-
-    .loader-container img.active {
-      opacity: 1;
-    }
-
-    .spinner {
-      border: 6px solid #f8bbd0; /* pastel pink */
-      border-top: 6px solid #ba68c8; /* soft lavender */
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      animation: spin 1.5s linear infinite;
-      margin: 20px auto;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .caption {
-      text-align: center;
-      font-size: 1.2rem;
+    /* Caption di bawah tombol */
+    .swal2-html-container .button-caption {
       margin-top: 10px;
-      height: 30px;
-      color: #a58fcf; /* pastel ungu lembut */
+      font-size: 0.9rem;
+      color: #6b5b50; /* soft brown */
+      text-align: center;
+      font-style: italic;
     }
   </style>
 </head>
 <body>
 
-  <div class="loader-container">
-    <img src="images/pitrahriaaaaa1.jpg" class="active" alt="Foto 1" />
-    <img src="images/pitrahriaaaaa2.jpg" alt="Foto 2" />
-    <img src="images/pitrahriaaaaa3.jpg" alt="Foto 3" />
-    <img src="images/pitrahriaaaaa4.jpg" alt="Foto 4" />
-  </div>
-
-  <div class="spinner"></div>
-  <div class="caption">Loading... Bersabar ya!</div>
-
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
-    const images = document.querySelectorAll('.loader-container img');
-    const caption = document.querySelector('.caption');
-
-    const captionsText = [
-      "Loading... Sabar yaaaa.....!",
-      "Sabar yaa pitrahriaaaaa, hari ini latihan sabar!",
-      "iyaaa tau kamu gasuka disuruh sabarr, senyumin dulu ajaa!",
-      "tuhh kan beres, makanya sabarr hehehe!"
+    const messages = [
+      "Pesan 1: Selamat datang di alert pertama!",
+      "Pesan 2: Ini alert kedua, semangat terus!",
+      "Pesan 3: Alert ketiga dengan gaya berbeda.",
+      "Pesan 4: Kamu hebat, terus maju!",
+      "Pesan 5: Hampir selesai, tetap fokus!",
+      "Pesan 6: Dua lagi, kamu pasti bisa!",
+      "Pesan 7: Terakhir, terima kasih sudah sabar!"
     ];
 
-    let currentIndex = 0;
+    const buttonCaptions = [
+      "Ini caption tombol alert 1",
+      "Ini caption tombol alert 2",
+      "Caption tombol alert 3 di sini",
+      "Caption tombol alert 4 mantap!",
+      "Tinggal dua lagi, semangat!",
+      "Hampir selesai, jangan lupa senyum :)",
+      "Terima kasih atas kesabaranmu!"
+    ];
 
-    function changeSlide() {
-      images[currentIndex].classList.remove('active');
-      currentIndex = (currentIndex + 1) % images.length;
-      images[currentIndex].classList.add('active');
-      caption.textContent = captionsText[currentIndex];
+    const customAnimations = [
+      { showClass: 'swal2-show-right-left', hideClass: 'swal2-hide-right-left' },
+      { showClass: 'swal2-show-top-center', hideClass: 'swal2-hide-top-center' },
+      { showClass: 'swal2-show-zoom-in', hideClass: 'swal2-hide-zoom-out' },
+      { showClass: 'swal2-show-bottom-center', hideClass: 'swal2-hide-bottom-center' },
+      { showClass: 'swal2-show-fade-in', hideClass: 'swal2-hide-fade-out' },
+      { showClass: 'swal2-show-left-right', hideClass: 'swal2-hide-left-right' },
+      { showClass: 'swal2-show-scale-up', hideClass: 'swal2-hide-scale-down' }
+    ];
+
+    function blurBackground(blur) {
+      document.body.style.filter = blur ? 'blur(5px)' : 'none';
     }
 
-    setInterval(changeSlide, 10000); // ganti gambar tiap 10 detik
-  </script>
+    function showAlert(index = 0) {
+      if(index >= messages.length) {
+        blurBackground(false);
+        return;
+      }
 
+      blurBackground(true);
+
+      const anim = customAnimations[index];
+      const captionText = buttonCaptions[index];
+
+      Swal.fire({
+        title: `Alert ke-${index + 1}`,
+        html: `
+          <p>${messages[index]}</p>
+          <div class="button-caption">${captionText}</div>
+        `,
+        icon: 'info',
+        showConfirmButton: true,
+        confirmButtonText: 'Lanjutkan',
+        customClass: {
+          popup: anim.showClass,
+          hide: anim.hideClass,
+          confirmButton: 'custom-confirm-button',
+          htmlContainer: 'swal2-html-container'
+        },
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        buttonsStyling: false
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: `Info tambahan untuk alert ${index + 1}`,
+            text: `Ini adalah alert kedua untuk alert ke-${index + 1}`,
+            icon: 'success',
+            showConfirmButton: true,
+            confirmButtonText: 'OK',
+            customClass: {
+              popup: 'swal2-show-flip',
+              hide: 'swal2-hide-flip',
+              confirmButton: 'custom-confirm-button'
+            },
+            buttonsStyling: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false
+          }).then(() => {
+            showAlert(index + 1);
+          });
+        }
+      });
+    }
+
+    const style = document.createElement('style');
+    style.innerHTML = `
+      .custom-confirm-button {
+        background-color: #a8d5ba; /* hijau pastel */
+        border: none;
+        padding: 10px 24px;
+        font-size: 1rem;
+        border-radius: 6px;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      .custom-confirm-button:hover {
+        background-color: #8ec59d;
+      }
+
+      /* Animasi custom (sama seperti sebelumnya) */
+      @keyframes showRightLeft { from { transform: translateX(100%) scale(0.8); opacity: 0; } to { transform: translateX(0) scale(1); opacity: 1; } }
+      @keyframes hideRightLeft { from { transform: translateX(0) scale(1); opacity: 1; } to { transform: translateX(-100%) scale(0.8); opacity: 0; } }
+      .swal2-show-right-left { animation: showRightLeft 0.5s forwards; }
+      .swal2-hide-right-left { animation: hideRightLeft 0.4s forwards; }
+
+      @keyframes showTopCenter { from { transform: translateY(-100%) scale(0.8); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+      @keyframes hideTopCenter { from { transform: translateY(0) scale(1); opacity: 1; } to { transform: translateY(-100%) scale(0.8); opacity: 0; } }
+      .swal2-show-top-center { animation: showTopCenter 0.5s forwards; }
+      .swal2-hide-top-center { animation: hideTopCenter 0.4s forwards; }
+
+      @keyframes zoomIn { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+      @keyframes zoomOut { from { transform: scale(1); opacity: 1; } to { transform: scale(0.5); opacity: 0; } }
+      .swal2-show-zoom-in { animation: zoomIn 0.5s forwards; }
+      .swal2-hide-zoom-out { animation: zoomOut 0.4s forwards; }
+
+      @keyframes showBottomCenter { from { transform: translateY(100%) scale(0.8); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+      @keyframes hideBottomCenter { from { transform: translateY(0) scale(1); opacity: 1; } to { transform: translateY(100%) scale(0.8); opacity: 0; } }
+      .swal2-show-bottom-center { animation: showBottomCenter 0.5s forwards; }
+      .swal2-hide-bottom-center { animation: hideBottomCenter 0.4s forwards; }
+
+      @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+      .swal2-show-fade-in { animation: fadeIn 0.5s forwards; }
+      .swal2-hide-fade-out { animation: fadeOut 0.4s forwards; }
+
+      @keyframes showLeftRight { from { transform: translateX(-100%) scale(0.8); opacity: 0; } to { transform: translateX(0) scale(1); opacity: 1; } }
+      @keyframes hideLeftRight { from { transform: translateX(0) scale(1); opacity: 1; } to { transform: translateX(100%) scale(0.8); opacity: 0; } }
+      .swal2-show-left-right { animation: showLeftRight 0.5s forwards; }
+      .swal2-hide-left-right { animation: hideLeftRight 0.4s forwards; }
+
+      @keyframes scaleUp { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+      @keyframes scaleDown { from { transform: scale(1); opacity: 1; } to { transform: scale(0.5); opacity: 0; } }
+      .swal2-show-scale-up { animation: scaleUp 0.5s forwards; }
+      .swal2-hide-scale-down { animation: scaleDown 0.4s forwards; }
+
+      @keyframes flipIn { from { transform: rotateY(90deg); opacity: 0; } to { transform: rotateY(0deg); opacity: 1; } }
+      @keyframes flipOut { from { transform: rotateY(0deg); opacity: 1; } to { transform: rotateY(90deg); opacity: 0; } }
+      .swal2-show-flip { animation: flipIn 0.5s forwards; }
+      .swal2-hide-flip { animation: flipOut 0.4s forwards; }
+    `;
+    document.head.appendChild(style);
+
+    // Mulai alert pertama
+    showAlert();
+  </script>
 </body>
 </html>
