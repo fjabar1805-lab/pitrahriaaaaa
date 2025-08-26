@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Loading Page with SweetAlert</title>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     body, html {
@@ -18,7 +19,7 @@
       background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #e1bee7 100%);
       font-family: 'Quicksand', sans-serif;
       color: #7c6f64;
-      transition: filter 0.3s ease;
+      transition: all 0.8s ease;
     }
 
     .loader-container {
@@ -126,6 +127,96 @@
       border-radius: 3px;
     }
 
+    /* Typewriter Article Styles */
+    .article-container {
+      display: none;
+      width: 100%;
+      min-height: 100vh;
+      padding: 40px 20px;
+      background: white;
+      color: #333;
+      font-family: 'Courier Prime', monospace;
+      line-height: 1.8;
+      font-size: 16px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+      overflow-y: auto;
+      animation: fadeInArticle 1s ease-in-out;
+    }
+
+    @keyframes fadeInArticle {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .article-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px;
+      background: white;
+      box-shadow: 0 0 30px rgba(0,0,0,0.1);
+      border-radius: 10px;
+    }
+
+    .article-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      text-align: center;
+      color: #2c3e50;
+      border-bottom: 3px solid #ba68c8;
+      padding-bottom: 15px;
+    }
+
+    .article-text {
+      font-size: 16px;
+      line-height: 2;
+      color: #333;
+      text-align: justify;
+      text-indent: 30px;
+    }
+
+    .article-text p {
+      margin-bottom: 20px;
+    }
+
+    .typewriter-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 20px;
+      background-color: #333;
+      animation: blink 1s infinite;
+      margin-left: 2px;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    .back-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #ba68c8;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      z-index: 1001;
+    }
+
+    .back-button:hover {
+      background: #9c5aab;
+      transform: translateY(-2px);
+    }
+
     /* Custom SweetAlert styling */
     .custom-confirm-button {
       background-color: #a8d5ba !important;
@@ -183,40 +274,56 @@
     }
     .swal2-show-flip { animation: flipIn 0.5s forwards; }
     .swal2-hide-flip { animation: flipOut 0.4s forwards; }
+
+    /* Hidden state for main content */
+    .main-content.hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
-  <div class="loader-container">
-    <!-- Placeholder untuk fallback -->
-    <div class="image-placeholder active" id="placeholder-1">
-      <div class="icon">🌸</div>
-      <div>Loading Foto 1...</div>
-    </div>
-    <div class="image-placeholder" id="placeholder-2">
-      <div class="icon">🦋</div>
-      <div>Loading Foto 2...</div>
-    </div>
-    <div class="image-placeholder" id="placeholder-3">
-      <div class="icon">🌺</div>
-      <div>Loading Foto 3...</div>
-    </div>
-    <div class="image-placeholder" id="placeholder-4">
-      <div class="icon">💖</div>
-      <div>Loading Foto 4...</div>
+  <div class="main-content">
+    <div class="loader-container">
+      <!-- Placeholder untuk fallback -->
+      <div class="image-placeholder active" id="placeholder-1">
+        <div class="icon">🌸</div>
+        <div>Loading Foto 1...</div>
+      </div>
+      <div class="image-placeholder" id="placeholder-2">
+        <div class="icon">🦋</div>
+        <div>Loading Foto 2...</div>
+      </div>
+      <div class="image-placeholder" id="placeholder-3">
+        <div class="icon">🌺</div>
+        <div>Loading Foto 3...</div>
+      </div>
+      <div class="image-placeholder" id="placeholder-4">
+        <div class="icon">💖</div>
+        <div>Loading Foto 4...</div>
+      </div>
+      
+      <!-- Gambar asli -->
+      <img src="images/pitrahriaaaaa1.jpg" alt="Foto 1" id="img-1" />
+      <img src="images/pitrahriaaaaa2.jpg" alt="Foto 2" id="img-2" />
+      <img src="images/pitrahriaaaaa3.jpg" alt="Foto 3" id="img-3" />
+      <img src="images/pitrahriaaaaa4.jpg" alt="Foto 4" id="img-4" />
     </div>
     
-    <!-- Gambar asli -->
-    <img src="images/pitrahriaaaaa1.jpg" alt="Foto 1" id="img-1" />
-    <img src="images/pitrahriaaaaa2.jpg" alt="Foto 2" id="img-2" />
-    <img src="images/pitrahriaaaaa3.jpg" alt="Foto 3" id="img-3" />
-    <img src="images/pitrahriaaaaa4.jpg" alt="Foto 4" id="img-4" />
+    <div class="spinner"></div>
+    <div class="caption">Loading... Bersabar ya!</div>
+    
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress"></div>
+    </div>
   </div>
-  
-  <div class="spinner"></div>
-  <div class="caption">Loading... Bersabar ya!</div>
-  
-  <div class="progress-bar">
-    <div class="progress-fill" id="progress"></div>
+
+  <!-- Article Container -->
+  <div class="article-container" id="articleContainer">
+    <button class="back-button" onclick="goBackToMain()">← Kembali</button>
+    <div class="article-content">
+      <div class="article-title" id="articleTitle">Cerita Tentang Pitrahriaaaaa</div>
+      <div class="article-text" id="articleText"></div>
+    </div>
   </div>
 
   <script>
@@ -225,6 +332,10 @@
     const caption = document.querySelector('.caption');
     const progress = document.getElementById('progress');
     const spinner = document.querySelector('.spinner');
+    const mainContent = document.querySelector('.main-content');
+    const articleContainer = document.getElementById('articleContainer');
+    const articleText = document.getElementById('articleText');
+    const articleTitle = document.getElementById('articleTitle');
     
     const captionsText = [
       "Loading... Sabar yaa pitrahriaaaaa! 🦋",
@@ -246,12 +357,48 @@
       "HAHAHA dikira gitu doang?? ya ngga dong, pencet lagi bawahnya",
       "udah?? ya belom dong masa gitu doang pencet lagi ini yang dibawah."
     ];
+
+    // Article content - Anda bisa edit ini sesuai keinginan
+    const articleContent = `
+      Hari ini adalah hari yang istimewa untuk Pitrahriaaaaa. Setelah melalui berbagai rintangan dan tantangan, akhirnya semua berjalan dengan lancar.
+
+      Perjalanan yang dimulai dengan penuh ketidakpastian, kini berakhir dengan kebahagiaan. Setiap langkah yang diambil membawa makna tersendiri, setiap detik yang berlalu adalah pembelajaran berharga.
+
+      Kesabaran yang telah ditunjukkan selama ini patut diacungi jempol. Tidak mudah memang untuk tetap tegar di tengah badai kehidupan, namun Pitrahriaaaaa telah membuktikan bahwa kekuatan sejati datang dari dalam hati.
+
+      Foto-foto indah yang telah kita lihat tadi adalah cerminan dari perjalanan hidup yang penuh warna. Setiap momen terabadikan dengan sempurna, menjadi kenangan yang tak akan terlupakan.
+
+      Kini saatnya untuk melangkah ke fase berikutnya. Masa depan yang cerah menanti, dengan segala kemungkinan dan peluang yang tak terbatas. Semangat yang telah dibangun akan menjadi bekal untuk menghadapi hari-hari mendatang.
+
+      Terima kasih telah mengikuti perjalanan ini dengan sabar. Kesabaran adalah kunci dari segala pencapaian, dan hari ini adalah bukti nyata dari filosofi tersebut.
+
+      Sampai jumpa di petualangan selanjutnya, Pitrahriaaaaa!
+    `;
     
     let currentIndex = 0;
     let loadedImages = [false, false, false, false];
     let imagesLoaded = 0;
     let slideshowCompleted = false;
     let slideshowInterval;
+
+    // Typewriter effect function
+    function typeWriter(element, text, speed = 50) {
+      let i = 0;
+      element.innerHTML = '';
+      
+      function type() {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(type, speed);
+        } else {
+          // Add blinking cursor at the end
+          element.innerHTML += '<span class="typewriter-cursor"></span>';
+        }
+      }
+      
+      type();
+    }
 
     // Cek loading gambar
     images.forEach((img, index) => {
@@ -277,7 +424,6 @@
           placeholders[0].classList.add('active');
         }
         
-        // Jika tidak ada gambar yang berhasil dimuat, gunakan placeholder slideshow
         if (imagesLoaded === 0) {
           startPlaceholderSlideshow();
         }
@@ -290,17 +436,14 @@
     }
 
     function changeSlide() {
-      // Hide current slide
       if (loadedImages[currentIndex]) {
         images[currentIndex].classList.remove('active');
       } else {
         placeholders[currentIndex].classList.remove('active');
       }
       
-      // Move to next slide
       currentIndex = (currentIndex + 1) % 4;
       
-      // Show next slide
       if (loadedImages[currentIndex]) {
         images[currentIndex].classList.add('active');
       } else {
@@ -310,21 +453,20 @@
       caption.textContent = captionsText[currentIndex];
       updateProgress();
       
-      // Jika sudah sampai foto ke-4 dan belum pernah menjalankan SweetAlert
       if (currentIndex === 0 && !slideshowCompleted) {
         slideshowCompleted = true;
         clearInterval(slideshowInterval);
         
         setTimeout(() => {
           startSweetAlertSequence();
-        }, 2000); // Tunggu 2 detik setelah kembali ke foto pertama
+        }, 2000);
       }
     }
 
     function startSlideshow() {
       caption.textContent = captionsText[0];
       updateProgress();
-      slideshowInterval = setInterval(changeSlide, 3000); // Ganti tiap 3 detik
+      slideshowInterval = setInterval(changeSlide, 3000);
     }
 
     function startPlaceholderSlideshow() {
@@ -345,12 +487,15 @@
 
     function showSweetAlert(index) {
       if (index >= sweetAlertMessages.length) {
-        // Selesai semua alert
-        caption.textContent = "✨ Semua selesai! Terima kasih! ✨";
+        // Setelah alert terakhir, tampilkan artikel
+        showTypewriterArticle();
         return;
       }
 
       const animations = ['swal2-show-right-left', 'swal2-show-zoom-in', 'swal2-show-flip', 'swal2-show-right-left'];
+      
+      // Cek apakah ini alert terakhir (index 3)
+      const isLastAlert = index === (sweetAlertMessages.length - 1);
 
       Swal.fire({
         title: `🌟 Alert ke-${index + 1}`,
@@ -360,7 +505,7 @@
         `,
         icon: 'success',
         showConfirmButton: true,
-        confirmButtonText: index === sweetAlertMessages.length - 1 ? 'Selesai! 🎉' : 'LANJUT YAAA PITRAHRIAAAAA ➤',
+        confirmButtonText: isLastAlert ? 'Baca Cerita! 📖' : 'LANJUT YAAA PITRAHRIAAAAA ➤',
         customClass: {
           popup: animations[index],
           confirmButton: 'custom-confirm-button'
@@ -372,16 +517,49 @@
         color: '#333'
       }).then((result) => {
         if (result.isConfirmed) {
-          if (index < sweetAlertMessages.length - 1) {
+          if (isLastAlert) {
+            // Jika ini alert terakhir, langsung tampilkan artikel
+            setTimeout(() => {
+              showTypewriterArticle();
+            }, 500);
+          } else {
+            // Jika bukan alert terakhir, lanjut ke alert berikutnya
             setTimeout(() => {
               showSweetAlert(index + 1);
             }, 500);
-          } else {
-            // Alert terakhir selesai
-            caption.textContent = "🌸 Semua selesai! Sampai jumpa! 🌸";
           }
         }
       });
+    }
+
+    function showTypewriterArticle() {
+      // Hide main content
+      mainContent.classList.add('hidden');
+      
+      // Change body background to white
+      document.body.style.background = 'white';
+      
+      // Show article container
+      articleContainer.style.display = 'block';
+      
+      // Start typewriter effect after a short delay
+      setTimeout(() => {
+        typeWriter(articleText, articleContent, 30); // 30ms per character
+      }, 500);
+    }
+
+    function goBackToMain() {
+      // Hide article
+      articleContainer.style.display = 'none';
+      
+      // Show main content
+      mainContent.classList.remove('hidden');
+      
+      // Restore original background
+      document.body.style.background = 'linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #e1bee7 100%)';
+      
+      // Reset caption
+      caption.textContent = "🌸 Kembali ke halaman utama! 🌸";
     }
 
     // Mulai dengan placeholder jika tidak ada gambar yang dimuat setelah 2 detik
