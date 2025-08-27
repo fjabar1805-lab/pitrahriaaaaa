@@ -141,7 +141,7 @@
       position: fixed;
       top: 0;
       left: 0;
-      z-index: 99999;
+      z-index: 1000;
       overflow-y: auto;
       animation: fadeInArticle 1s ease-in-out;
     }
@@ -168,22 +168,6 @@
       color: #2c3e50;
       border-bottom: 3px solid #ba68c8;
       padding-bottom: 15px;
-    }
-
-    .article-image {
-      width: 250px;
-      height: 250px;
-      border-radius: 50%;
-      object-fit: cover;
-      display: block;
-      margin: 20px auto 30px auto;
-      border: 4px solid #ba68c8;
-      box-shadow: 0 8px 20px rgba(186, 104, 200, 0.3);
-      transition: transform 0.3s ease;
-    }
-
-    .article-image:hover {
-      transform: scale(1.05);
     }
 
     .article-text {
@@ -225,7 +209,7 @@
       font-family: 'Quicksand', sans-serif;
       font-weight: 600;
       transition: all 0.3s ease;
-      z-index: 100000;
+      z-index: 1001;
     }
 
     .back-button:hover {
@@ -295,186 +279,10 @@
     .main-content.hidden {
       display: none;
     }
-
-    /* Login Screen Styles */
-    .login-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      padding: 20px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 10000;
-    }
-
-    .login-box {
-      background: rgba(255, 255, 255, 0.95);
-      padding: 40px 30px;
-      border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      max-width: 400px;
-      width: 100%;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .login-title {
-      font-size: 28px;
-      font-weight: 600;
-      color: #667eea;
-      margin-bottom: 10px;
-      font-family: 'Quicksand', sans-serif;
-    }
-
-    .login-subtitle {
-      font-size: 16px;
-      color: #666;
-      margin-bottom: 30px;
-      font-family: 'Quicksand', sans-serif;
-    }
-
-    .password-input-container {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 25px;
-    }
-
-    .password-digit {
-      width: 50px;
-      height: 50px;
-      border: 2px solid #e1e5e9;
-      border-radius: 12px;
-      text-align: center;
-      font-size: 24px;
-      font-weight: 600;
-      color: #333;
-      background: white;
-      transition: all 0.3s ease;
-      outline: none;
-      font-family: 'Quicksand', sans-serif;
-    }
-
-    .password-digit:focus {
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-      transform: scale(1.05);
-    }
-
-    .password-digit.filled {
-      border-color: #667eea;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: white;
-    }
-
-    .password-digit.error {
-      border-color: #ff6b6b;
-      animation: shake 0.5s ease-in-out;
-    }
-
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      75% { transform: translateX(5px); }
-    }
-
-    .login-button {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      color: white;
-      border: none;
-      padding: 15px 40px;
-      border-radius: 25px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-family: 'Quicksand', sans-serif;
-      width: 100%;
-      margin-bottom: 20px;
-    }
-
-    .login-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-    }
-
-    .login-button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .error-message {
-      color: #ff6b6b;
-      font-size: 14px;
-      margin-top: 10px;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      font-family: 'Quicksand', sans-serif;
-    }
-
-    .error-message.show {
-      opacity: 1;
-    }
-
-    .login-hint {
-      font-size: 12px;
-      color: #999;
-      margin-top: 15px;
-      font-style: italic;
-      font-family: 'Quicksand', sans-serif;
-    }
-
-    .lock-icon {
-      font-size: 60px;
-      margin-bottom: 20px;
-      color: #667eea;
-      animation: bounce 2s infinite;
-    }
-
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-10px); }
-      60% { transform: translateY(-5px); }
-    }
   </style>
 </head>
 <body>
-  <!-- Login Screen -->
-  <div class="login-container" id="loginContainer">
-    <div class="login-box">
-      <div class="lock-icon">🔒</div>
-      <div class="login-title">Selamat Datang!</div>
-      <div class="login-subtitle">Masukkan sandi 6 digit untuk melanjutkan</div>
-      
-      <div class="password-input-container">
-        <input type="password" class="password-digit" maxlength="1" id="digit1">
-        <input type="password" class="password-digit" maxlength="1" id="digit2">
-        <input type="password" class="password-digit" maxlength="1" id="digit3">
-        <input type="password" class="password-digit" maxlength="1" id="digit4">
-        <input type="password" class="password-digit" maxlength="1" id="digit5">
-        <input type="password" class="password-digit" maxlength="1" id="digit6">
-      </div>
-      
-      <button class="login-button" onclick="checkPassword()">Masuk 🚀</button>
-      
-      <div class="error-message" id="errorMessage">
-        Sandi salah! Coba lagi ya 😊
-      </div>
-      
-      <div class="login-hint">
-        Hint: Tanggal spesial untuk Pitrahriaaaaa 💖
-      </div>
-    </div>
-  </div>
-
-  <div class="main-content hidden">
+  <div class="main-content">
     <div class="loader-container">
       <!-- Placeholder untuk fallback -->
       <div class="image-placeholder active" id="placeholder-1">
@@ -496,9 +304,9 @@
       
       <!-- Gambar asli -->
       <img src="images/pitrahriaaaaa1.jpg" alt="Foto 1" id="img-1" />
-<img src="images/pitrahriaaaaa2.jpg" alt="Foto 2" id="img-2" />
-<img src="images/pitrahriaaaaa3.jpg" alt="Foto 3" id="img-3" />
-<img src="images/pitrahriaaaaa4.jpg" alt="Foto 4" id="img-4" />
+      <img src="images/pitrahriaaaaa2.jpg" alt="Foto 2" id="img-2" />
+      <img src="images/pitrahriaaaaa3.jpg" alt="Foto 3" id="img-3" />
+      <img src="images/pitrahriaaaaa4.jpg" alt="Foto 4" id="img-4" />
     </div>
     
     <div class="spinner"></div>
@@ -514,20 +322,12 @@
     <button class="back-button" onclick="goBackToMain()">← Kembali</button>
     <div class="article-content">
       <div class="article-title" id="articleTitle">Cerita Tentang Pitrahriaaaaa</div>
-      <img src="images/pitrahriaaaaa_artikel.jpg" alt="Foto Pitrahriaaaaa" class="article-image" />
       <div class="article-text" id="articleText"></div>
     </div>
   </div>
 
   <script>
-    // Login System Variables
-    const correctPassword = "033124";
-    const loginContainer = document.getElementById('loginContainer');
-    const errorMessage = document.getElementById('errorMessage');
-    const passwordDigits = document.querySelectorAll('.password-digit');
-    
-    // Main App Variables
-    const images = document.querySelectorAll('.loader-container img');
+    const images = document.querySelectorAll('img');
     const placeholders = document.querySelectorAll('.image-placeholder');
     const caption = document.querySelector('.caption');
     const progress = document.getElementById('progress');
@@ -536,162 +336,6 @@
     const articleContainer = document.getElementById('articleContainer');
     const articleText = document.getElementById('articleText');
     const articleTitle = document.getElementById('articleTitle');
-
-    // Login System Functions
-    function setupPasswordInput() {
-      passwordDigits.forEach((digit, index) => {
-        digit.addEventListener('input', function(e) {
-          const value = e.target.value;
-          
-          // Only allow numbers
-          if (!/^\d$/.test(value)) {
-            e.target.value = '';
-            return;
-          }
-          
-          // Add filled class
-          if (value) {
-            e.target.classList.add('filled');
-            // Move to next input
-            if (index < passwordDigits.length - 1) {
-              passwordDigits[index + 1].focus();
-            }
-          } else {
-            e.target.classList.remove('filled');
-          }
-          
-          // Clear error state
-          clearErrorState();
-        });
-        
-        digit.addEventListener('keydown', function(e) {
-          // Handle backspace
-          if (e.key === 'Backspace' && !e.target.value && index > 0) {
-            passwordDigits[index - 1].focus();
-            passwordDigits[index - 1].value = '';
-            passwordDigits[index - 1].classList.remove('filled');
-          }
-          
-          // Handle enter key
-          if (e.key === 'Enter') {
-            checkPassword();
-          }
-        });
-        
-        digit.addEventListener('paste', function(e) {
-          e.preventDefault();
-          const pastedData = e.clipboardData.getData('text');
-          if (pastedData.length === 6 && /^\d{6}$/.test(pastedData)) {
-            pastedData.split('').forEach((char, i) => {
-              if (passwordDigits[i]) {
-                passwordDigits[i].value = char;
-                passwordDigits[i].classList.add('filled');
-              }
-            });
-          }
-        });
-      });
-      
-      // Focus first input on load
-      passwordDigits[0].focus();
-    }
-    
-    function checkPassword() {
-      const enteredPassword = Array.from(passwordDigits).map(digit => digit.value).join('');
-      
-      if (enteredPassword.length !== 6) {
-        showError();
-        return;
-      }
-      
-      if (enteredPassword === correctPassword) {
-        // Success - Start main application
-        loginSuccess();
-      } else {
-        // Wrong password
-        showError();
-      }
-    }
-    
-    function showError() {
-      errorMessage.classList.add('show');
-      passwordDigits.forEach(digit => {
-        digit.classList.add('error');
-        digit.value = '';
-        digit.classList.remove('filled');
-      });
-      
-      setTimeout(() => {
-        clearErrorState();
-        passwordDigits[0].focus();
-      }, 1000);
-    }
-    
-    function clearErrorState() {
-      errorMessage.classList.remove('show');
-      passwordDigits.forEach(digit => {
-        digit.classList.remove('error');
-      });
-    }
-    
-    function loginSuccess() {
-      // Hide login screen with animation
-      loginContainer.style.transform = 'scale(0.8)';
-      loginContainer.style.opacity = '0';
-      
-      setTimeout(() => {
-        loginContainer.style.display = 'none';
-        mainContent.classList.remove('hidden');
-        document.body.style.background = 'linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #e1bee7 100%)';
-        
-        // Start the main application
-        initMainApp();
-      }, 500);
-    }
-    
-    function initMainApp() {
-      // Initialize main application logic here
-      setupImageLoading();
-      
-      // Start image loading check
-      images.forEach((img, index) => {
-        img.onload = function() {
-          loadedImages[index] = true;
-          imagesLoaded++;
-          placeholders[index].style.display = 'none';
-          
-          if (index === 0) {
-            img.classList.add('active');
-          }
-          
-          if (imagesLoaded === 4) {
-            startSlideshow();
-          }
-        };
-        
-        img.onerror = function() {
-          loadedImages[index] = false;
-          img.classList.add('hidden');
-          
-          if (index === 0 && !loadedImages[0]) {
-            placeholders[0].classList.add('active');
-          }
-          
-          if (imagesLoaded === 0) {
-            startPlaceholderSlideshow();
-          }
-        };
-      });
-    }
-    
-    function setupImageLoading() {
-      // Start image loading process
-      setTimeout(() => {
-        if (imagesLoaded === 0) {
-          startPlaceholderSlideshow();
-        }
-      }, 2000);
-    }
     
     const captionsText = [
       "Loading... Sabar yaa pitrahriaaaaa! 🦋",
@@ -756,35 +400,35 @@
       type();
     }
 
-    // Cek loading gambar - moved to initMainApp()
-    // images.forEach((img, index) => {
-    //   img.onload = function() {
-    //     loadedImages[index] = true;
-    //     imagesLoaded++;
-    //     placeholders[index].style.display = 'none';
+    // Cek loading gambar
+    images.forEach((img, index) => {
+      img.onload = function() {
+        loadedImages[index] = true;
+        imagesLoaded++;
+        placeholders[index].style.display = 'none';
         
-    //     if (index === 0) {
-    //       img.classList.add('active');
-    //     }
+        if (index === 0) {
+          img.classList.add('active');
+        }
         
-    //     if (imagesLoaded === 4) {
-    //       startSlideshow();
-    //     }
-    //   };
+        if (imagesLoaded === 4) {
+          startSlideshow();
+        }
+      };
       
-    //   img.onerror = function() {
-    //     loadedImages[index] = false;
-    //     img.classList.add('hidden');
+      img.onerror = function() {
+        loadedImages[index] = false;
+        img.classList.add('hidden');
         
-    //     if (index === 0 && !loadedImages[0]) {
-    //       placeholders[0].classList.add('active');
-    //     }
+        if (index === 0 && !loadedImages[0]) {
+          placeholders[0].classList.add('active');
+        }
         
-    //     if (imagesLoaded === 0) {
-    //       startPlaceholderSlideshow();
-    //     }
-    //   };
-    // });
+        if (imagesLoaded === 0) {
+          startPlaceholderSlideshow();
+        }
+      };
+    });
 
     function updateProgress() {
       const progressPercent = ((currentIndex + 1) / 4) * 100;
@@ -874,11 +518,10 @@
       }).then((result) => {
         if (result.isConfirmed) {
           if (isLastAlert) {
-            // Tutup alert dengan paksa sebelum menampilkan artikel
-            Swal.close();
+            // Jika ini alert terakhir, langsung tampilkan artikel
             setTimeout(() => {
               showTypewriterArticle();
-            }, 300);
+            }, 500);
           } else {
             // Jika bukan alert terakhir, lanjut ke alert berikutnya
             setTimeout(() => {
@@ -890,23 +533,11 @@
     }
 
     function showTypewriterArticle() {
-      // Tutup semua SweetAlert yang mungkin masih terbuka dengan force
-      if (Swal.isVisible()) {
-        Swal.close();
-      }
-      
-      // Hapus semua elemen SweetAlert dari DOM
-      const swalElements = document.querySelectorAll('.swal2-container, .swal2-backdrop');
-      swalElements.forEach(element => {
-        element.remove();
-      });
-      
       // Hide main content
       mainContent.classList.add('hidden');
       
       // Change body background to white
       document.body.style.background = 'white';
-      document.body.style.overflow = 'hidden';
       
       // Show article container
       articleContainer.style.display = 'block';
@@ -914,7 +545,7 @@
       // Start typewriter effect after a short delay
       setTimeout(() => {
         typeWriter(articleText, articleContent, 30); // 30ms per character
-      }, 100);
+      }, 500);
     }
 
     function goBackToMain() {
@@ -926,24 +557,17 @@
       
       // Restore original background
       document.body.style.background = 'linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #e1bee7 100%)';
-      document.body.style.overflow = 'auto';
       
       // Reset caption
       caption.textContent = "🌸 Kembali ke halaman utama! 🌸";
     }
 
     // Mulai dengan placeholder jika tidak ada gambar yang dimuat setelah 2 detik
-    // Commented out - now handled in initMainApp()
-    // setTimeout(() => {
-    //   if (imagesLoaded === 0) {
-    //     startPlaceholderSlideshow();
-    //   }
-    // }, 2000);
-    
-    // Initialize login system when page loads
-    document.addEventListener('DOMContentLoaded', function() {
-      setupPasswordInput();
-    });
+    setTimeout(() => {
+      if (imagesLoaded === 0) {
+        startPlaceholderSlideshow();
+      }
+    }, 2000);
   </script>
 </body>
 </html>
