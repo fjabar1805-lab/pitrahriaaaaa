@@ -141,7 +141,7 @@
       position: fixed;
       top: 0;
       left: 0;
-      z-index: 1000;
+      z-index: 99999;
       overflow-y: auto;
       animation: fadeInArticle 1s ease-in-out;
     }
@@ -168,6 +168,22 @@
       color: #2c3e50;
       border-bottom: 3px solid #ba68c8;
       padding-bottom: 15px;
+    }
+
+    .article-image {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      margin: 20px auto 30px auto;
+      border: 4px solid #ba68c8;
+      box-shadow: 0 8px 20px rgba(186, 104, 200, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .article-image:hover {
+      transform: scale(1.05);
     }
 
     .article-text {
@@ -209,7 +225,7 @@
       font-family: 'Quicksand', sans-serif;
       font-weight: 600;
       transition: all 0.3s ease;
-      z-index: 1001;
+      z-index: 100000;
     }
 
     .back-button:hover {
@@ -322,6 +338,7 @@
     <button class="back-button" onclick="goBackToMain()">← Kembali</button>
     <div class="article-content">
       <div class="article-title" id="articleTitle">Cerita Tentang Pitrahriaaaaa</div>
+      <img src="images/pitrahriaaaaa_artikel.jpg" alt="Foto Pitrahriaaaaa" class="article-image" />
       <div class="article-text" id="articleText"></div>
     </div>
   </div>
@@ -518,10 +535,11 @@
       }).then((result) => {
         if (result.isConfirmed) {
           if (isLastAlert) {
-            // Jika ini alert terakhir, langsung tampilkan artikel
+            // Tutup alert dengan paksa sebelum menampilkan artikel
+            Swal.close();
             setTimeout(() => {
               showTypewriterArticle();
-            }, 500);
+            }, 300);
           } else {
             // Jika bukan alert terakhir, lanjut ke alert berikutnya
             setTimeout(() => {
@@ -533,11 +551,23 @@
     }
 
     function showTypewriterArticle() {
+      // Tutup semua SweetAlert yang mungkin masih terbuka dengan force
+      if (Swal.isVisible()) {
+        Swal.close();
+      }
+      
+      // Hapus semua elemen SweetAlert dari DOM
+      const swalElements = document.querySelectorAll('.swal2-container, .swal2-backdrop');
+      swalElements.forEach(element => {
+        element.remove();
+      });
+      
       // Hide main content
       mainContent.classList.add('hidden');
       
       // Change body background to white
       document.body.style.background = 'white';
+      document.body.style.overflow = 'hidden';
       
       // Show article container
       articleContainer.style.display = 'block';
@@ -545,7 +575,7 @@
       // Start typewriter effect after a short delay
       setTimeout(() => {
         typeWriter(articleText, articleContent, 30); // 30ms per character
-      }, 500);
+      }, 100);
     }
 
     function goBackToMain() {
@@ -557,6 +587,7 @@
       
       // Restore original background
       document.body.style.background = 'linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #e1bee7 100%)';
+      document.body.style.overflow = 'auto';
       
       // Reset caption
       caption.textContent = "🌸 Kembali ke halaman utama! 🌸";
