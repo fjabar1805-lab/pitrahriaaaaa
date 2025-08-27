@@ -170,6 +170,19 @@
       padding-bottom: 15px;
     }
 
+    /* Style untuk foto artikel */
+    .article-image {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      border-radius: 15px;
+      margin: 20px auto;
+      display: block;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      object-fit: cover;
+      border: 3px solid #ba68c8;
+    }
+
     .article-text {
       font-size: 16px;
       line-height: 2;
@@ -469,12 +482,16 @@
     <button class="back-button" onclick="goBackToMain()">← Kembali</button>
     <div class="article-content">
       <div class="article-title" id="articleTitle">Cerita Tentang Pitrahriaaaaa</div>
+      
+      <!-- Foto artikel ditambahkan di sini setelah garis ungu -->
+      <img src="images/pitrahriaaaaa_artikel.jpg" alt="Pitrahriaaaaa" class="article-image" id="articleImage" />
+      
       <div class="article-text" id="articleText"></div>
     </div>
   </div>
 
   <script>
-    const images = document.querySelectorAll('img');
+    const images = document.querySelectorAll('img:not(.article-image)'); // Exclude article image from slideshow
     const placeholders = document.querySelectorAll('.image-placeholder');
     const caption = document.querySelector('.caption');
     const progress = document.getElementById('progress');
@@ -715,11 +732,14 @@
 
     function showSweetAlert(index) {
       if (index >= sweetAlertMessages.length) {
-        showTypewriterArticle();
+        // Tidak langsung show artikel, tapi tunggu delay untuk memastikan alert hilang
+        setTimeout(() => {
+          showTypewriterArticle();
+        }, 300);
         return;
       }
 
-      const animations = ['swal2-show-right-left', 'swal2-show-zoom-in', 'swal2-show-flip', 'swal2-show-right-left'];
+      const animations = ['swal2-show-right-left', 'swal2-show-zoom-in', 'swal2-show-flip'];
       const isLastAlert = index === (sweetAlertMessages.length - 1);
 
       Swal.fire({
@@ -743,26 +763,33 @@
       }).then((result) => {
         if (result.isConfirmed) {
           if (isLastAlert) {
+            // Pastikan alert tertutup sepenuhnya sebelum show artikel
             setTimeout(() => {
               showTypewriterArticle();
             }, 500);
           } else {
             setTimeout(() => {
               showSweetAlert(index + 1);
-            }, 500);
+            }, 300);
           }
         }
       });
     }
 
     function showTypewriterArticle() {
-      mainContent.classList.add('hidden');
-      document.body.style.background = 'white';
-      articleContainer.style.display = 'block';
+      // Pastikan semua SweetAlert tertutup dengan delay yang cukup
+      Swal.close();
       
+      // Tunggu delay lebih lama untuk memastikan alert benar-benar hilang
       setTimeout(() => {
-        typeWriter(articleText, articleContent, 30);
-      }, 500);
+        mainContent.classList.add('hidden');
+        document.body.style.background = 'white';
+        articleContainer.style.display = 'block';
+        
+        setTimeout(() => {
+          typeWriter(articleText, articleContent, 30);
+        }, 500);
+      }, 800); // Delay diperbesar dari 100ms ke 800ms
     }
 
     function goBackToMain() {
