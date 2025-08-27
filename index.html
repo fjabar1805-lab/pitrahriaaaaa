@@ -142,7 +142,8 @@
       top: 0;
       left: 0;
       z-index: 1000;
-      overflow-y: auto;
+      overflow-y: scroll;
+      height: 100vh;
       animation: fadeInArticle 1s ease-in-out;
     }
 
@@ -432,13 +433,13 @@
   <!-- Login Container -->
   <div class="login-container" id="loginContainer">
     <div class="login-box">
-      <h2 class="login-title">🔐 Mau masuk??</h2>
-      <p class="login-subtitle">Tanggal berapa yaa kita pertama kali chat? day one </p>
+      <h2 class="login-title">🔐 Login Required</h2>
+      <p class="login-subtitle">Masukkan password untuk mengakses halaman</p>
       <div class="login-form">
-        <input type="password" id="passwordInput" placeholder="Tanggal berapa?? tau ga..." class="password-input" />
+        <input type="password" id="passwordInput" placeholder="Masukkan password..." class="password-input" />
         <button onclick="checkPassword()" class="login-button">Login</button>
       </div>
-      <div class="login-hint">Hint: Tahun kemaren, harusnya sih kamu tahu hehehee.... 💖</div>
+      <div class="login-hint">Hint: 6 digit angka special untuk Pitrahriaaaaa 💖</div>
     </div>
   </div>
 
@@ -481,7 +482,7 @@
   <div class="article-container" id="articleContainer">
     <button class="back-button" onclick="goBackToMain()">← Kembali</button>
     <div class="article-content">
-      <div class="article-title" id="articleTitle">Ini Panggilanya PITRAHRIAAAAA</div>
+      <div class="article-title" id="articleTitle">Cerita Tentang Pitrahriaaaaa</div>
       
       <!-- Foto artikel ditambahkan di sini setelah garis ungu -->
       <img src="images/pitrahriaaaaa_artikel.jpg" alt="Pitrahriaaaaa" class="article-image" id="articleImage" />
@@ -525,15 +526,19 @@
 
     // Article content
     const articleContent = `
-     Assalamualaikum buat yang baca ini, mau menceritraan orang yang fotonya terlihat sekarang. Dia namanya Fitrah ria ...... (kelanjutanya apa? lupa maaf), panggilan nya Pitrahriaaaaa itu khusus Fadhiil jabbar sindu perdana saja yang boleh manggil itu. Menurut saya dia perempuan yang dewasa, pintar, dan baik sangat sangat baik. Karena rajin ibadah yang wajib atau sunnah, suka mengingatkan kebaikan dan kewajiban, enak menjadi teman cerita karena bisa memberikan masukan yang baik, sangat sangat support apa yang saya lakukan dalam kondisi apapun selalu dia semangatin.
+      Hari ini adalah hari yang istimewa untuk Pitrahriaaaaa. Setelah melalui berbagai rintangan dan tantangan, akhirnya semua berjalan dengan lancar.
 
-Kita sudah kenal ini lebih dari satu tahun dimana perkenalan pertama terjadi pada 31/03/2024. Walaupun dalam satu tahun lebih ini sampai sekarang saya buat ini ada tarik ulur nya  waktu dulu tidak selalu dekat, tapi dalam beberapa bulan belakangan kami sangat dekat lohhh dan itu sangat kerasa dampak nyaa bagi saya. Ibadah saya jadi lebih rajin. kadang merasa capek merasa penat jadi hilang itu semua saat PITRAHRIAAAAA ini mengajak telpon di setiap malam, idk tapi itu bisa menjadi stres release saya. Sekarang kalo pergi maunya cepet pulang kalo sudah malam takut pitrahriaaaaa ketiduran heheeh.
+      Perjalanan yang dimulai dengan penuh ketidakpastian, kini berakhir dengan kebahagiaan. Setiap langkah yang diambil membawa makna tersendiri, setiap detik yang berlalu adalah pembelajaran berharga.
 
-Daritadi pujian terus isinya sekarang negatif nya boleh yaaaa. pitrahriaaaaa ini juga ada sisi kurang baik nya gaiss, seperti dia gampang banget OVT nya kemudian dia mudah banget bt nyaa. Walaupun begitu semua bisa diatasi karena dirinya yang dewasa tinggal bagaimana cara saya menyampaikan atau mengajak komunikasi dia, jadi itu bukan masalah bagi saya. bukanya kalau mencintai sesorang itu harus segalanya yaa?? jangan mencintai yang bagusnya saja tapi sifat jelek nya juga harus kita cintai dan kita terima, karena seiring waktu semua itu akan berubah setiap bertambah usia orang akan makin dewasa.
+      Kesabaran yang telah ditunjukkan selama ini patut diacungi jempol. Tidak mudah memang untuk tetap tegar di tengah badai kehidupan, namun Pitrahriaaaaa telah membuktikan bahwa kekuatan sejati datang dari dalam hati.
 
-Langsung masuk ke pesan yang mau aku sampein aja yaa, aku mau ngasih tau kamu kalo kamu itu sebenarnya anaknya SANGAT KUAT semua masalah sudah kamu hadapi masalah masalah yang kemaren kamu hadapi itu sangat berat dan kamu bisa melawatinya semu, jadi masalah ini atau masalah nanti yang akan datang itu gakan seberapa sama masalah yang sudah kamu lewati. huuuu sayang nya kamu gabisa melihat pov itu jadi kamu selalu ngerasa "CAPEK" disini aku mau ngasih tau sebenrya kamu anaknya sangat sangat sangat sangat kuattt bangettttt itu juga yang harus ada di pikirran kamu sehingga kamu gakan ngerasa cape dan ovt dari setiap masalah yang ada. aku gakan kemana-mana bakal selalu menemanin kamu aku harap kamu juga ada ke inginan seperti itu, aku bantu semua apa yang kamu butuhkan JANGAN NGERASA GAENAKAN SAMA AKUUU!!!!!
+      Foto-foto indah yang telah kita lihat tadi adalah cerminan dari perjalanan hidup yang penuh warna. Setiap momen terabadikan dengan sempurna, menjadi kenangan yang tak akan terlupakan.
 
-HEHEHEEHEHE.......... aku mau bilang makasih ke kamu sayang pitrahriaaaaa kesayangan, untuk semua kebaikan kamu selama ini yang belom bisa aku balas 1 per 1 dan mungkin gakan bisa kebalas oleh aku mau aku punya uang berapa triliun juta dolar tidak akan sebanding dengan kebaikan yang kamu kasih dengan dampak positif yang kamu berikan bagi hidup aku. susah buat di ungkapin nyaa huuu pokoknya aku udah sayang cinta bangett nget nget nget sama kamu, gada alat buat ngukur rasa sayang juga kan.... kalo ada terus di tes ke aku pasti meledak itu alat karena aku sayang banget sama kaamu. Aku selalu berdoa semoga kita bisa teruss bareng-bareng dan ALLAH izinkan kita bareng terus bersama, sama aku yaaa jadi pribadi yang lebih baik, preibadi yang lebih taat beribadah, bareng bareng banyak ngumpulin pahala agar bisa masuk surga nya ALLAH, jadi orang yang lebih baik bisa bantu semua orang yang membutuhkan kita, terus kita sama-sama sukses yaaaa. aamiin luvvvv uuuu sayangggg🤍🤍🤍🤍🤍🤍🤍🤍🤍
+      Kini saatnya untuk melangkah ke fase berikutnya. Masa depan yang cerah menanti, dengan segala kemungkinan dan peluang yang tak terbatas. Semangat yang telah dibangun akan menjadi bekal untuk menghadapi hari-hari mendatang.
+
+      Terima kasih telah mengikuti perjalanan ini dengan sabar. Kesabaran adalah kunci dari segala pencapaian, dan hari ini adalah bukti nyata dari filosofi tersebut.
+
+      Sampai jumpa di petualangan selanjutnya, Pitrahriaaaaa!
     `;
     
     let currentIndex = 0;
@@ -705,7 +710,7 @@ HEHEHEEHEHE.......... aku mau bilang makasih ke kamu sayang pitrahriaaaaa kesaya
     function startSlideshow() {
       caption.textContent = captionsText[0];
       updateProgress();
-      slideshowInterval = setInterval(changeSlide, 3000);
+      slideshowInterval = setInterval(changeSlide, 20000); // Ubah dari 3000ms (3 detik) ke 20000ms (20 detik)
     }
 
     function startPlaceholderSlideshow() {
@@ -713,7 +718,7 @@ HEHEHEEHEHE.......... aku mau bilang makasih ke kamu sayang pitrahriaaaaa kesaya
       placeholders[0].classList.add('active');
       caption.textContent = captionsText[0];
       updateProgress();
-      slideshowInterval = setInterval(changeSlide, 3000);
+      slideshowInterval = setInterval(changeSlide, 20000); // Ubah dari 3000ms ke 20000ms (20 detik)
     }
 
     function startSweetAlertSequence() {
