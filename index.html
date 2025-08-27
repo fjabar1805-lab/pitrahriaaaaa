@@ -279,10 +279,157 @@
     .main-content.hidden {
       display: none;
     }
+
+    /* Debug info */
+    .debug-info {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 12px;
+      z-index: 1000;
+      max-width: 300px;
+    }
+
+    /* Login Styles */
+    .login-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      z-index: 10000;
+    }
+
+    .login-container.hidden {
+      display: none;
+    }
+
+    .login-box {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      width: 100%;
+      max-width: 400px;
+      backdrop-filter: blur(10px);
+      animation: loginFadeIn 1s ease-out;
+    }
+
+    @keyframes loginFadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .login-title {
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .login-subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 1rem;
+    }
+
+    .login-form {
+      margin-bottom: 20px;
+    }
+
+    .password-input {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      text-align: center;
+      margin-bottom: 20px;
+      font-family: 'Quicksand', sans-serif;
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+
+    .password-input:focus {
+      outline: none;
+      border-color: #ba68c8;
+      box-shadow: 0 0 10px rgba(186, 104, 200, 0.3);
+    }
+
+    .login-button {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #ba68c8, #9c5aab);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    .login-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(186, 104, 200, 0.4);
+    }
+
+    .login-hint {
+      color: #888;
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    .login-error {
+      color: #e74c3c;
+      margin-top: 15px;
+      font-weight: 600;
+      animation: shake 0.5s ease-in-out;
+    }
+
+    @keyframes shake {
+      0%, 20%, 40%, 60%, 80% { transform: translateX(0); }
+      10%, 30%, 50%, 70% { transform: translateX(-5px); }
+      15%, 35%, 55%, 75% { transform: translateX(5px); }
+    }
   </style>
 </head>
 <body>
-  <div class="main-content">
+  <!-- Debug info -->
+  <div class="debug-info" id="debugInfo">
+    Status: Loading...
+  </div>
+
+  <!-- Login Container -->
+  <div class="login-container" id="loginContainer">
+    <div class="login-box">
+      <h2 class="login-title">🔐 Login Required</h2>
+      <p class="login-subtitle">Masukkan password untuk mengakses halaman</p>
+      <div class="login-form">
+        <input type="password" id="passwordInput" placeholder="Masukkan password..." class="password-input" />
+        <button onclick="checkPassword()" class="login-button">Login</button>
+      </div>
+      <div class="login-hint">Hint: 6 digit angka special untuk Pitrahriaaaaa 💖</div>
+    </div>
+  </div>
+
+  <div class="main-content hidden">
     <div class="loader-container">
       <!-- Placeholder untuk fallback -->
       <div class="image-placeholder active" id="placeholder-1">
@@ -302,7 +449,7 @@
         <div>Loading Foto 4...</div>
       </div>
       
-      <!-- Gambar asli -->
+      <!-- Gambar asli dengan path yang benar -->
       <img src="images/pitrahriaaaaa1.jpg" alt="Foto 1" id="img-1" />
       <img src="images/pitrahriaaaaa2.jpg" alt="Foto 2" id="img-2" />
       <img src="images/pitrahriaaaaa3.jpg" alt="Foto 3" id="img-3" />
@@ -336,6 +483,7 @@
     const articleContainer = document.getElementById('articleContainer');
     const articleText = document.getElementById('articleText');
     const articleTitle = document.getElementById('articleTitle');
+    const debugInfo = document.getElementById('debugInfo');
     
     const captionsText = [
       "Loading... Sabar yaa pitrahriaaaaa! 🦋",
@@ -358,7 +506,7 @@
       "udah?? ya belom dong masa gitu doang pencet lagi ini yang dibawah."
     ];
 
-    // Article content - Anda bisa edit ini sesuai keinginan
+    // Article content
     const articleContent = `
       Hari ini adalah hari yang istimewa untuk Pitrahriaaaaa. Setelah melalui berbagai rintangan dan tantangan, akhirnya semua berjalan dengan lancar.
 
@@ -381,6 +529,82 @@
     let slideshowCompleted = false;
     let slideshowInterval;
 
+    // Login functionality
+    const correctPassword = "033124";
+    const loginContainer = document.getElementById('loginContainer');
+    const passwordInput = document.getElementById('passwordInput');
+
+    // Focus on password input when page loads
+    window.addEventListener('load', function() {
+      passwordInput.focus();
+    });
+
+    // Allow Enter key to submit password
+    passwordInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        checkPassword();
+      }
+    });
+
+    function checkPassword() {
+      const enteredPassword = passwordInput.value;
+      
+      if (enteredPassword === correctPassword) {
+        // Correct password - hide login and show main content
+        loginContainer.style.animation = 'loginFadeOut 0.5s ease-in forwards';
+        
+        setTimeout(() => {
+          loginContainer.classList.add('hidden');
+          mainContent.classList.remove('hidden');
+          updateDebug('Login successful! Loading images...');
+        }, 500);
+        
+      } else {
+        // Wrong password - show error
+        const existingError = document.querySelector('.login-error');
+        if (existingError) {
+          existingError.remove();
+        }
+        
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'login-error';
+        errorDiv.textContent = '❌ Password salah! Coba lagi...';
+        
+        document.querySelector('.login-form').appendChild(errorDiv);
+        passwordInput.value = '';
+        passwordInput.focus();
+        
+        // Remove error after 3 seconds
+        setTimeout(() => {
+          if (errorDiv.parentNode) {
+            errorDiv.remove();
+          }
+        }, 3000);
+      }
+    }
+
+    // Add fadeOut animation for login
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes loginFadeOut {
+        from {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+        to {
+          opacity: 0;
+          transform: translateY(-50px) scale(0.9);
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Debug function
+    function updateDebug(message) {
+      debugInfo.innerHTML = message;
+      console.log('Debug:', message);
+    }
+
     // Typewriter effect function
     function typeWriter(element, text, speed = 50) {
       let i = 0;
@@ -392,7 +616,6 @@
           i++;
           setTimeout(type, speed);
         } else {
-          // Add blinking cursor at the end
           element.innerHTML += '<span class="typewriter-cursor"></span>';
         }
       }
@@ -400,11 +623,15 @@
       type();
     }
 
-    // Cek loading gambar
+    // Cek loading gambar dengan debug info
     images.forEach((img, index) => {
+      updateDebug(`Trying to load: ${img.src}`);
+      
       img.onload = function() {
         loadedImages[index] = true;
         imagesLoaded++;
+        updateDebug(`Image ${index + 1} loaded successfully. Total: ${imagesLoaded}/4`);
+        
         placeholders[index].style.display = 'none';
         
         if (index === 0) {
@@ -412,20 +639,18 @@
         }
         
         if (imagesLoaded === 4) {
+          updateDebug('All images loaded! Starting slideshow...');
           startSlideshow();
         }
       };
       
       img.onerror = function() {
         loadedImages[index] = false;
+        updateDebug(`Failed to load image ${index + 1}: ${img.src}`);
         img.classList.add('hidden');
         
         if (index === 0 && !loadedImages[0]) {
           placeholders[0].classList.add('active');
-        }
-        
-        if (imagesLoaded === 0) {
-          startPlaceholderSlideshow();
         }
       };
     });
@@ -456,6 +681,7 @@
       if (currentIndex === 0 && !slideshowCompleted) {
         slideshowCompleted = true;
         clearInterval(slideshowInterval);
+        updateDebug('Slideshow completed! Starting alerts...');
         
         setTimeout(() => {
           startSweetAlertSequence();
@@ -470,6 +696,7 @@
     }
 
     function startPlaceholderSlideshow() {
+      updateDebug('Starting placeholder slideshow (no images loaded)');
       placeholders[0].classList.add('active');
       caption.textContent = captionsText[0];
       updateProgress();
@@ -479,6 +706,7 @@
     function startSweetAlertSequence() {
       spinner.style.display = 'none';
       caption.textContent = "🎉 Slideshow selesai! Siap untuk surprise?";
+      debugInfo.style.display = 'none'; // Hide debug info
       
       setTimeout(() => {
         showSweetAlert(0);
@@ -487,14 +715,11 @@
 
     function showSweetAlert(index) {
       if (index >= sweetAlertMessages.length) {
-        // Setelah alert terakhir, tampilkan artikel
         showTypewriterArticle();
         return;
       }
 
       const animations = ['swal2-show-right-left', 'swal2-show-zoom-in', 'swal2-show-flip', 'swal2-show-right-left'];
-      
-      // Cek apakah ini alert terakhir (index 3)
       const isLastAlert = index === (sweetAlertMessages.length - 1);
 
       Swal.fire({
@@ -518,12 +743,10 @@
       }).then((result) => {
         if (result.isConfirmed) {
           if (isLastAlert) {
-            // Jika ini alert terakhir, langsung tampilkan artikel
             setTimeout(() => {
               showTypewriterArticle();
             }, 500);
           } else {
-            // Jika bukan alert terakhir, lanjut ke alert berikutnya
             setTimeout(() => {
               showSweetAlert(index + 1);
             }, 500);
@@ -533,41 +756,33 @@
     }
 
     function showTypewriterArticle() {
-      // Hide main content
       mainContent.classList.add('hidden');
-      
-      // Change body background to white
       document.body.style.background = 'white';
-      
-      // Show article container
       articleContainer.style.display = 'block';
       
-      // Start typewriter effect after a short delay
       setTimeout(() => {
-        typeWriter(articleText, articleContent, 30); // 30ms per character
+        typeWriter(articleText, articleContent, 30);
       }, 500);
     }
 
     function goBackToMain() {
-      // Hide article
       articleContainer.style.display = 'none';
-      
-      // Show main content
       mainContent.classList.remove('hidden');
-      
-      // Restore original background
       document.body.style.background = 'linear-gradient(135deg, #fce4ec 0%, #f8bbd0 50%, #e1bee7 100%)';
-      
-      // Reset caption
       caption.textContent = "🌸 Kembali ke halaman utama! 🌸";
+      debugInfo.style.display = 'block';
     }
 
-    // Mulai dengan placeholder jika tidak ada gambar yang dimuat setelah 2 detik
+    // Mulai dengan placeholder jika tidak ada gambar yang dimuat setelah 3 detik
     setTimeout(() => {
       if (imagesLoaded === 0) {
+        updateDebug('No images loaded after 3 seconds, starting placeholder slideshow');
         startPlaceholderSlideshow();
       }
-    }, 2000);
+    }, 3000);
+
+    // Initial debug info
+    updateDebug('Page loaded. Attempting to load images...');
   </script>
 </body>
 </html>
